@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Voyage Cost Calculator</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+        .calculator-container {
+            max-width: 900px;
+        }
+    </style>
+</head>
+<body class="bg-gray-100 flex items-center justify-center min-h-screen p-4">
+
+    <div class="calculator-container w-full mx-auto">
+        <header class="text-center mb-8">
+            <h1 class="text-3xl md:text-4xl font-bold text-gray-800">🚢 Voyage Cost Calculator ⚓</h1>
+            <p class="text-gray-600 mt-2">Enter your voyage details below to get an instant cost estimate.</p>
+        </header>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+            
+            <!-- Input Section -->
+            <div class="bg-white p-6 rounded-xl shadow-lg">
+                <h2 class="text-2xl font-semibold text-gray-700 border-b pb-3 mb-4">📊 Inputs</h2>
+                
+                <div class="space-y-4">
+                    <!-- Day Rate -->
+                    <div class="flex items-center space-x-3">
+                        <span class="text-2xl">💵</span>
+                        <div class="flex-1">
+                            <label for="dayRate" class="block text-sm font-medium text-gray-600">Day Rate</label>
+                            <div class="relative">
+                                <span class="absolute inset-y-0 left-0 pl-3 flex items-center text-gray-500">$</span>
+                                <input type="number" id="dayRate" value="10500" class="w-full pl-7 pr-12 py-2 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500">
+                                <span class="absolute inset-y-0 right-0 pr-3 flex items-center text-gray-500">/ day</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Fuel Burn -->
+                    <div class="flex items-center space-x-3">
+                        <span class="text-2xl">🔥</span>
+                        <div class="flex-1">
+                            <label for="fuelBurn" class="block text-sm font-medium text-gray-600">Underway Fuel Burn</label>
+                            <div class="relative">
+                                <input type="number" id="fuelBurn" value="85" class="w-full pl-3 pr-16 py-2 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500">
+                                <span class="absolute inset-y-0 right-0 pr-3 flex items-center text-gray-500">GPH</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Fuel Cost -->
+                    <div class="flex items-center space-x-3">
+                        <span class="text-2xl">⛽</span>
+                        <div class="flex-1">
+                            <label for="fuelCost" class="block text-sm font-medium text-gray-600">Fuel Cost</label>
+                             <div class="relative">
+                                <span class="absolute inset-y-0 left-0 pl-3 flex items-center text-gray-500">$</span>
+                                <input type="number" id="fuelCost" value="2.50" step="0.01" class="w-full pl-7 pr-16 py-2 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500">
+                                <span class="absolute inset-y-0 right-0 pr-3 flex items-center text-gray-500">/ gallon</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Speed -->
+                    <div class="flex items-center space-x-3">
+                        <span class="text-2xl">⏩</span>
+                        <div class="flex-1">
+                            <label for="speed" class="block text-sm font-medium text-gray-600">Speed</label>
+                            <div class="relative">
+                                <input type="number" id="speed" value="9.5" step="0.1" class="w-full pl-3 pr-16 py-2 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500">
+                                <span class="absolute inset-y-0 right-0 pr-3 flex items-center text-gray-500">MPH</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Distance -->
+                    <div class="flex items-center space-x-3">
+                        <span class="text-2xl">🗺️</span>
+                        <div class="flex-1">
+                            <label for="distance" class="block text-sm font-medium text-gray-600">Distance</label>
+                             <div class="relative">
+                                <input type="number" id="distance" value="550" class="w-full pl-3 pr-16 py-2 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500">
+                                <span class="absolute inset-y-0 right-0 pr-3 flex items-center text-gray-500">miles</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Days in Port -->
+                    <div class="flex items-center space-x-3">
+                        <span class="text-2xl">⚓</span>
+                        <div class="flex-1">
+                            <label for="daysInPort" class="block text-sm font-medium text-gray-600">Days in Port</label>
+                            <div class="relative">
+                                <input type="number" id="daysInPort" value="3" class="w-full pl-3 pr-16 py-2 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500">
+                                <span class="absolute inset-y-0 right-0 pr-3 flex items-center text-gray-500">days</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Port Costs -->
+                    <div class="flex items-center space-x-3">
+                        <span class="text-2xl">🅿️</span>
+                        <div class="flex-1">
+                            <label for="portCosts" class="block text-sm font-medium text-gray-600">Port Costs</label>
+                            <div class="relative">
+                                <span class="absolute inset-y-0 left-0 pl-3 flex items-center text-gray-500">$</span>
+                                <input type="number" id="portCosts" value="1500" class="w-full pl-7 py-2 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Output Section -->
+            <div class="bg-white p-6 rounded-xl shadow-lg">
+                <h2 class="text-2xl font-semibold text-gray-700 border-b pb-3 mb-4">🧾 Outputs</h2>
+                
+                <div class="space-y-3">
+                    <div class="flex justify-between items-center p-2 rounded-md bg-gray-50">
+                        <span class="font-medium text-gray-600">🕒 Underway Duration:</span>
+                        <span id="underwayDuration" class="font-semibold text-gray-800">0.00 hrs</span>
+                    </div>
+                    <div class="flex justify-between items-center p-2 rounded-md bg-gray-50">
+                        <span class="font-medium text-gray-600">⏳ Port Duration:</span>
+                        <span id="portDuration" class="font-semibold text-gray-800">0.00 hrs</span>
+                    </div>
+                    <div class="flex justify-between items-center p-3 rounded-md bg-blue-50 border border-blue-200">
+                        <span class="font-bold text-blue-800">🗓️ Total Charter Duration:</span>
+                        <span id="totalDuration" class="font-bold text-blue-900">0.00 days</span>
+                    </div>
+                    <hr class="my-3">
+                    <div class="flex justify-between items-center p-2 rounded-md bg-gray-50">
+                        <span class="font-medium text-gray-600">💰 Charter Cost:</span>
+                        <span id="charterCost" class="font-semibold text-gray-800">$0.00</span>
+                    </div>
+                     <div class="flex justify-between items-center p-2 rounded-md bg-gray-50">
+                        <span class="font-medium text-gray-600">🔥 Underway Fuel:</span>
+                        <span id="underwayFuel" class="font-semibold text-gray-800">0.00 gal</span>
+                    </div>
+                     <div class="flex justify-between items-center p-2 rounded-md bg-gray-50">
+                        <span class="font-medium text-gray-600">⚓ Port Fuel (50% rate):</span>
+                        <span id="portFuel" class="font-semibold text-gray-800">0.00 gal</span>
+                    </div>
+                    <div class="flex justify-between items-center p-2 rounded-md bg-gray-50 font-semibold">
+                        <span class="text-gray-600">🛢️ Total Fuel Consumed:</span>
+                        <span id="fuelConsumed" class="text-gray-800">0.00 gal</span>
+                    </div>
+                    <div class="flex justify-between items-center p-2 rounded-md bg-gray-50">
+                        <span class="font-medium text-gray-600">💸 Total Fuel Cost:</span>
+                        <span id="totalFuelCost" class="font-semibold text-gray-800">$0.00</span>
+                    </div>
+                    <hr class="my-3 border-t-2 border-dashed">
+                    <
