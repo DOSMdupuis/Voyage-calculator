@@ -118,6 +118,12 @@
                         </div>
                     </div>
                 </div>
+                <!-- Calculate Button -->
+                <div class="mt-6">
+                    <button id="calculateBtn" class="w-full bg-blue-600 text-white font-bold py-3 px-4 rounded-lg hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition duration-150 ease-in-out">
+                        Calculate Voyage Cost
+                    </button>
+                </div>
             </div>
 
             <!-- Output Section -->
@@ -159,4 +165,94 @@
                         <span id="totalFuelCost" class="font-semibold text-gray-800">$0.00</span>
                     </div>
                     <hr class="my-3 border-t-2 border-dashed">
-                    <
+                    <div class="flex justify-between items-center p-4 rounded-lg bg-green-100 border border-green-300">
+                        <span class="text-xl font-bold text-green-800">✅ Total Voyage Cost:</span>
+                        <span id="totalVoyageCost" class="text-xl font-bold text-green-900">$0.00</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // --- DOM Element Selection ---
+        const inputs = {
+            dayRate: document.getElementById('dayRate'),
+            fuelBurn: document.getElementById('fuelBurn'),
+            fuelCost: document.getElementById('fuelCost'),
+            speed: document.getElementById('speed'),
+            distance: document.getElementById('distance'),
+            daysInPort: document.getElementById('daysInPort'),
+            portCosts: document.getElementById('portCosts'),
+        };
+
+        const outputs = {
+            underwayDuration: document.getElementById('underwayDuration'),
+            portDuration: document.getElementById('portDuration'),
+            totalDuration: document.getElementById('totalDuration'),
+            charterCost: document.getElementById('charterCost'),
+            underwayFuel: document.getElementById('underwayFuel'),
+            portFuel: document.getElementById('portFuel'),
+            fuelConsumed: document.getElementById('fuelConsumed'),
+            totalFuelCost: document.getElementById('totalFuelCost'),
+            totalVoyageCost: document.getElementById('totalVoyageCost'),
+        };
+
+        // --- Calculation Logic ---
+        function calculateVoyage() {
+            // 1. Get values from inputs, defaulting to 0 if empty or invalid
+            const dayRate = parseFloat(inputs.dayRate.value) || 0;
+            const fuelBurn = parseFloat(inputs.fuelBurn.value) || 0;
+            const fuelCost = parseFloat(inputs.fuelCost.value) || 0;
+            const speed = parseFloat(inputs.speed.value) || 0;
+            const distance = parseFloat(inputs.distance.value) || 0;
+            const daysInPort = parseFloat(inputs.daysInPort.value) || 0;
+            const portCosts = parseFloat(inputs.portCosts.value) || 0;
+
+            // 2. Perform calculations based on the SOP
+            // Step 1: Calculate Durations
+            const underwayDurationHours = speed > 0 ? distance / speed : 0;
+            const portDurationHours = daysInPort * 24;
+
+            // Step 2: Calculate Total Charter Duration
+            const totalCharterHours = underwayDurationHours + portDurationHours;
+            const totalCharterDays = totalCharterHours / 24;
+
+            // Step 3: Calculate Charter Cost
+            const charterCost = dayRate * totalCharterDays;
+
+            // Step 4: Calculate Fuel Consumption with different rates
+            const underwayFuelConsumed = fuelBurn * underwayDurationHours; // 100% burn rate
+            const portFuelConsumed = (fuelBurn * 0.5) * portDurationHours; // 50% burn rate
+            const totalFuelConsumed = underwayFuelConsumed + portFuelConsumed;
+
+            // Step 5: Calculate Total Fuel Cost
+            const totalFuelCost = totalFuelConsumed * fuelCost;
+
+            // Step 6: Calculate Total Voyage Cost
+            const totalVoyageCost = charterCost + totalFuelCost + portCosts;
+
+            // 3. Update the UI with formatted results
+            const formatCurrency = (value) => value.toLocaleString('en-US', { style: 'currency', currency: 'USD' });
+            const formatNumber = (value, decimals = 2) => value.toLocaleString('en-US', { minimumFractionDigits: decimals, maximumFractionDigits: decimals });
+
+            outputs.underwayDuration.textContent = `${formatNumber(underwayDurationHours)} hrs`;
+            outputs.portDuration.textContent = `${formatNumber(portDurationHours)} hrs`;
+            outputs.totalDuration.textContent = `${formatNumber(totalCharterDays)} days`;
+            outputs.charterCost.textContent = formatCurrency(charterCost);
+            outputs.underwayFuel.textContent = `${formatNumber(underwayFuelConsumed)} gal`;
+            outputs.portFuel.textContent = `${formatNumber(portFuelConsumed)} gal`;
+            outputs.fuelConsumed.textContent = `${formatNumber(totalFuelConsumed)} gal`;
+            outputs.totalFuelCost.textContent = formatCurrency(totalFuelCost);
+            outputs.totalVoyageCost.textContent = formatCurrency(totalVoyageCost);
+        }
+
+        // --- Event Listener ---
+        // Add a click listener to the button to trigger the calculation.
+        const calculateBtn = document.getElementById('calculateBtn');
+        calculateBtn.addEventListener('click', calculateVoyage);
+
+    </script>
+
+</body>
+</html>
